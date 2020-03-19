@@ -53,19 +53,58 @@ end
   end
   
   def turn
-    puts "Player #{current_player}, please enter a number 1-9:"
+    puts "Player, please enter a number 1-9:"
     input = gets.strip
     index = input_to_index(input)
-    cp = current_player
     if valid_move?(index)
+      cp = current_player
       move(index, cp)
      display_board
     else
       turn
-       
     end
-    
   end
   
+  def won?
+    a = WIN_COMBINATIONS.find { |combo| @board[combo[0]] == "X" && @board[combo[1]] == "X" && @board[combo[2]] == "X" }
+    
+    b = WIN_COMBINATIONS.find { |combo| @board[combo[0]] == "O" && @board[combo[1]] == "O" && @board[combo[2]] == "O" }
+    return a || b
+  
+  end
+  
+  
+  def full? 
+    !@board.any?{ |x| x=="" || x == " "}
+  end 
+  
+  
+  def draw?
+    !won? && full?
+  end
+  
+  def over?
+    won? || full?
+  end
+  
+  
+  def winner
+    
+    if won?
+      @board[won?[0]] == "X" ? "X" : "O"
+    else
+      nil
+    end
+      
+  end
+    
+    def play 
+      @board = Array.new(9, " ")
+      turn until over?
+      won? ? puts("Congratulations #{winner}!") : puts("Cat's Game!")
+   
+      puts "Would you like to play again? (Y or N)"
+      gets.strip.downcase == "y" || gets.strip.downcase == "yes" ? play : puts("Goodbye!")
+     end
   
 end
