@@ -12,7 +12,7 @@ class TicTacToe
     ]
   
   def initialize(board = nil) 
-    @board = board || Array.new(9, " ")
+    @board = Array.new(9, " ")
   end
   
    def display_board
@@ -35,11 +35,11 @@ end
   end
   
   def position_taken?(index)
-    !(@board[index].nil? || @board[index] == " ")
+    @board[index] != " "
   end
   
   def valid_move?(index)
-    index.between?(0,8) && !position_taken?(index)
+    !position_taken?(index) && index.between?(0,8)
     
   end
 
@@ -59,10 +59,10 @@ end
     if valid_move?(index)
       cp = current_player
       move(index, cp)
-     display_board
     else
       turn
     end
+    display_board
   end
   
   def won?
@@ -99,12 +99,11 @@ end
   end
     
     def play 
-      @board = Array.new(9, " ")
       turn until over?
       won? ? puts("Congratulations #{winner}!") : puts("Cat's Game!")
    
-      puts "Would you like to play again? (Y or N)"
-      gets.strip.downcase == "y" || gets.strip.downcase == "yes" ? play : puts("Goodbye!")
+      # puts "Would you like to play again? (Y or N)"
+      # gets.strip.downcase == "y" || gets.strip.downcase == "yes" ? play : puts("Goodbye!")
      end
   
 end
