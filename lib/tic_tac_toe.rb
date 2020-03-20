@@ -1,3 +1,4 @@
+require "pry"
 class TicTacToe
   
   WIN_COMBINATIONS = [
@@ -56,7 +57,9 @@ end
     puts "Player, please enter a number 1-9:"
     input = gets.strip
     index = input_to_index(input)
+  
     if valid_move?(index)
+      #binding.pry
       cp = current_player
       move(index, cp)
     else
@@ -84,7 +87,7 @@ end
   end
   
   def over?
-    won? || full?
+    won? || draw?
   end
   
   
@@ -102,8 +105,6 @@ end
       turn until over?
       won? ? puts("Congratulations #{winner}!") : puts("Cat's Game!")
    
-      # puts "Would you like to play again? (Y or N)"
-      # gets.strip.downcase == "y" || gets.strip.downcase == "yes" ? play : puts("Goodbye!")
      end
   
 end
